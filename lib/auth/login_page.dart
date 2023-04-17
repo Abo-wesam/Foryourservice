@@ -16,33 +16,17 @@ import '../Home.dart';
 import '../NameOfClass.dart';
 import '../constant.dart';
 import '../view_model/login_view_model.dart';
-import '../widget/MicButton.dart';
 import '../widget/form_button.dart';
 import '../widget/input_field.dart';
 
 
 class LoginPage extends GetWidget<LoginViewModel>  {
-  final FlutterTts flutterTts = FlutterTts();
- SpeechToText _speechToText = SpeechToText();
-  bool _speechEnabled = false;
-  String _lastWords = '';
-
-  @override
-  void initState() {
-    _initSpeech();
-  }
-
-  /// This has to happen only once per app
-  void _initSpeech() async {
-    _speechEnabled = await _speechToText.initialize();
- 
-  }
-
+  
   @override
   Widget build(BuildContext context)  {
     double screenHeight = MediaQuery.of(context).size.height;
-    final controller = Get.put(LoginViewModel());
-    NameOfClass _nameclass=NameOfClass();
+    // final controller = Get.put(LoginViewModel());
+    // NameOfClass _nameclass=NameOfClass();
 
     return Scaffold(
 
@@ -176,8 +160,7 @@ class LoginPage extends GetWidget<LoginViewModel>  {
         ),
       ),
 
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-      floatingActionButton: MicButton(className:_nameclass.LoginModel,Controller:_nameclass.Login),
+
     );
   }
 }

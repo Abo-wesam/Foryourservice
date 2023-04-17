@@ -1,9 +1,7 @@
-import 'dart:convert';
 
 
-import 'package:flutter_tts/flutter_tts.dart';
+
 import 'package:get/get.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 import '../Disabled_person/Speech.dart';
 
@@ -18,7 +16,7 @@ class LoginViewModel extends GetxController {
   // late final Function(String? email, String? password)? onSubmitted;
   @override
   void onInit() {
-
+    // _Speech.speak("Login");
     email = "";
     password = "";
     emailError = null;
@@ -54,8 +52,8 @@ class LoginViewModel extends GetxController {
     return isValid;
   }
 
-  Future<void> speak() async {
-    _Speech.SpeechToTexts();
+  void speak()  {
+    // _Speech.Speechs();
   }
 
   void submitLogin()async {
