@@ -7,25 +7,24 @@
 import 'package:avatar_glow/avatar_glow.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_tts/flutter_tts.dart';
-import 'package:foryourservice/auth/register_page.dart';
+
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
-import 'package:speech_to_text/speech_to_text.dart';
 import '../Home.dart';
-import '../NameOfClass.dart';
-import '../constant.dart';
+import '../view_model/SpeechController.dart';
 import '../view_model/login_view_model.dart';
 import '../widget/form_button.dart';
 import '../widget/input_field.dart';
 
 
 class LoginPage extends GetWidget<LoginViewModel>  {
+  const LoginPage({super.key});
+
   
   @override
   Widget build(BuildContext context)  {
     double screenHeight = MediaQuery.of(context).size.height;
-    // final controller = Get.put(LoginViewModel());
+     final speech = Get.put(SpeechController());
     // NameOfClass _nameclass=NameOfClass();
 
     return Scaffold(
@@ -81,8 +80,9 @@ class LoginPage extends GetWidget<LoginViewModel>  {
                     controller.email= value;
                   
                 },
+
                 labelText: "Email",
-                errorText: controller.emailError,
+                // errorText: controller.emailError,
                 keyboardType: TextInputType.emailAddress,
                 textInputAction: TextInputAction.next,
                 autoFocus: true,
@@ -125,7 +125,7 @@ class LoginPage extends GetWidget<LoginViewModel>  {
             FormButton(
 
               text: "Log In",
-              onPressed: controller.speak,
+              onPressed:controller.submitLogin,
               // onPressed: controller.submitLogin,
               ),
 
@@ -135,7 +135,8 @@ class LoginPage extends GetWidget<LoginViewModel>  {
             TextButton(
                  onPressed: () {
                   // Get.to(RegisterPage());
-                  Get.toNamed('/RegisterPage');
+                   controller.GoToRegister();
+                  // Get.toNamed('/RegisterPage');
                  },
                 
                 child: RichText(
@@ -159,7 +160,25 @@ class LoginPage extends GetWidget<LoginViewModel>  {
           ],
         ),
       ),
-
+      // floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+      // floatingActionButton: Obx(
+      //         ()=>AvatarGlow(
+      //       animate: speech.isListening.value,
+      //       glowColor: Colors.blue,
+      //       endRadius: 90.0,
+      //       duration: Duration(milliseconds: 2000),
+      //       repeat: true,
+      //       repeatPauseDuration: Duration(milliseconds: 100),
+      //       child: FloatingActionButton(
+      //         child: Icon(speech.isListening.value?Icons.mic:Icons.mic_none),
+      //         onPressed: (){
+      //           speech.listen();},
+      //
+      //       ),
+      //
+      //
+      //     )
+      // ),
 
     );
   }

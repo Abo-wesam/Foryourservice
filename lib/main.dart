@@ -1,24 +1,33 @@
-import 'package:device_preview/device_preview.dart';
-import 'package:flutter/foundation.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'Home.dart';
-import 'auth/login_page.dart';
+
+import 'helper/firebase_options.dart';
 import 'model/Binding/Binding.dart';
 import 'model/Binding/Routes.dart';
-import 'package:get_it/get_it.dart';
 
 void main() async {
 
   WidgetsFlutterBinding.ensureInitialized();
-  runApp(
-   
-     DevicePreview(
-      // enabled: !kReleaseMode,
-      // enabled: !kDebugMode,
 
-      builder: (context) => const MyApp(),
-    ),
+ await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+
+  // await Firebase.initializeApp(
+  //   options:
+  //   const FirebaseOptions(
+  //     apiKey: "AIzaSyCFO06XPEjgL1nJvrBp35QmD5cNRNnWp4Q",
+  //     appId: "1:679604109335:android:fde4328fe35c3c63df9c52",
+  //     messagingSenderId: "679604109335",
+  //     projectId: "foryourserviceapp", ),
+  // );
+  runApp(
+    const MyApp(),
+    //  DevicePreview(
+    //   // enabled: !kReleaseMode,
+    //   // enabled: !kDebugMode,
+
+    //   builder: (context) => const MyApp(),
+    // ),
   );
     // const MyApp());
 }
@@ -33,8 +42,6 @@ class MyApp extends StatelessWidget {
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
       useInheritedMediaQuery: true,
-      locale: DevicePreview.locale(context),
-      builder: DevicePreview.appBuilder,
       title: 'Flutter Demo',
       theme: ThemeData(
         primarySwatch: Colors.blue,
