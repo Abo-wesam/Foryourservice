@@ -4,7 +4,10 @@ class CustomTextFromField extends StatelessWidget {
   final String lable;
   final String hint;
   final FormFieldSetter? onSaved;
-  final String  Function(String?)? validator;
+  final String?  Function(String?)? validator;
+  final Icon? icon;
+  final TextEditingController? controller;
+
 
   const CustomTextFromField({
     Key? key,
@@ -12,7 +15,12 @@ class CustomTextFromField extends StatelessWidget {
     required this.hint,
     this.onSaved,
     this.validator,
+    this.icon,  this.controller,
+
+
   }) : super(key: key);
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -22,10 +30,13 @@ class CustomTextFromField extends StatelessWidget {
         Flexible(
           child: TextFormField(
             onSaved: onSaved,
+            controller:controller,
             validator : validator,
+            // autovalidateMode: (aut_valid!) ?AutovalidateMode.onUserInteraction:AutovalidateMode.disabled,
             decoration: InputDecoration(
               label: Text(lable),
               //labelText: lable,
+              icon:icon ,
               
               
               hintText: hint,

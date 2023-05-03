@@ -1,32 +1,36 @@
 
 
 
+import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 
 import '../Disabled_person/Speech.dart';
+import '../auth/Dashboard/dashboard.dart';
+import '../auth/register_page.dart';
+import 'SpeechController.dart';
 
 
 
 
 class LoginViewModel extends GetxController {
+  // SpeechController spech=Get.put(SpeechController());
   Speech _Speech = Speech();
-  // var authService = Get.find<AuthService>();
   late String email, password;
   String? emailError, passwordError;
-  // late final Function(String? email, String? password)? onSubmitted;
   @override
   void onInit() {
-    // _Speech.speak("Login");
+    // spech.HandlingVoic();
+   // _Speech.speak("Login");
     email = "";
     password = "";
-    emailError = null;
-    passwordError = null;
+    emailError = '';
+    passwordError = '';
     super.onInit();
   }
 
   void resetErrorText() {
-    emailError = null;
-    passwordError = null;
+    emailError = '';
+    passwordError = '';
     update();
   }
 
@@ -53,10 +57,14 @@ class LoginViewModel extends GetxController {
   }
 
   void speak()  {
+   print('log');
     // _Speech.Speechs();
+     // _Speech.speak("Login");
   }
 
   void submitLogin()async {
+    // BuildContext context;
+    Get.to(dashboard());
     // SharedPreferences _prefe=await SharedPreferences.getInstance();
     //
     // if (validateLogin()) {
@@ -91,4 +99,11 @@ class LoginViewModel extends GetxController {
  //
  //    }
  //  }
+ void  GoToRegister (){
+    print('test');
+    Get.to(() => RegisterPage());
+    // Get.to( RegisterPage());
+
+  }
+
 }
