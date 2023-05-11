@@ -19,10 +19,10 @@ class _RegisterCompanystate extends State<RegisterCompany> {
   final formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
-    String selectedVale = 'Delivery Services';
     final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
     final registrcontroller = Get.put(RegisterViewModel());
+    // registrcontroller.TYpeUSerController.text =="";
     return Scaffold(
       body: ListView(children: [
         Form(
@@ -30,7 +30,36 @@ class _RegisterCompanystate extends State<RegisterCompany> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
+              // SizedBox(height: MediaQuery.of(context).size.height * 0.05),
+
+
               SizedBox(height: MediaQuery.of(context).size.height * 0.08),
+              Container(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text('Type User'),
+                    const SizedBox(width: 20),
+                    DropdownButton(
+                        hint: Text('Choose'),
+                        onChanged: (String? NewValue) {
+                          setState(() {
+                            registrcontroller.TYpeUSerController.text =
+                                NewValue!;
+                            print(registrcontroller.TYpeUSerController.text);
+                          });
+                        },
+                        items:
+                            <String>['Customr', 'Company'].map((String value) {
+                          return DropdownMenuItem<String>(
+                            value: value,
+                            child: Text(value),
+                          );
+                        }).toList()),
+                  ],
+                ),
+              ),
+              const SizedBox(height: 10),
               Container(
                 margin: const EdgeInsets.symmetric(horizontal: 20),
                 child: CustomTextFromField(
@@ -89,39 +118,57 @@ class _RegisterCompanystate extends State<RegisterCompany> {
                   icon: Icon(Icons.location_city),
                 ),
               ),
-
               const SizedBox(height: 20),
               Container(
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text('Select Type For your Company'),
-                    const SizedBox(width: 20),
-                    DropdownButton(
-                        value: selectedVale,
-                        items: <String>['Delivery Services', 'Transportation']
-                            .map((String value) {
-                          return DropdownMenuItem<String>(
-                            value: value,
-                            child: Text(value),
-                          );
-                        }).toList(),
-                        onChanged: (String? NewValue) {
-                          registrcontroller.TYpeCompanyController.text ==
-                              NewValue;
-                        }),
-                  ],
+                margin: const EdgeInsets.symmetric(horizontal: 20),
+                child: CustomTextField(
+                  controller: registrcontroller.phoneController,
+                  hintText: 'Phone number',
+                  labelText: 'Phone',
+                  icon: Icon(Icons.location_city),
                 ),
               ),
               const SizedBox(height: 20),
-
-              TextFormField(
-                controller: registrcontroller.DescrptionController,
-                decoration: const InputDecoration(
-                  hintText: 'Enter Descrption For Your Company',
-                ),
-                keyboardType: TextInputType.multiline,
-                maxLines: null,
+              Container(
+                child: registrcontroller.TYpeUSerController.text == "Company"
+                    ? Column(
+                        children: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text('Select Type For your Company'),
+                              const SizedBox(width: 20),
+                              DropdownButton(
+                                hint: Text('Choose'),
+                                onChanged: (String? NewValue) {
+                                  print(NewValue);
+                                  registrcontroller.setcompanytyp(NewValue!);
+                                  setState(() {});
+                                },
+                                items: <String>[
+                                  'DeliveryServices',
+                                  'Transportation'
+                                ].map((String value) {
+                                  return DropdownMenuItem<String>(
+                                    value: value,
+                                    child: Text(value),
+                                  );
+                                }).toList(),
+                              ),
+                            ],
+                          ),
+                          TextFormField(
+                            // enabled:( registrcontroller.TYpeUSerController.text =="") ? false : true,
+                            controller: registrcontroller.DescrptionController,
+                            decoration: const InputDecoration(
+                              hintText: 'Enter Descrption For Your Company',
+                            ),
+                            keyboardType: TextInputType.multiline,
+                            maxLines: null,
+                          )
+                        ],
+                      )
+                    : Text(''),
               ),
 
               const SizedBox(height: 20),
@@ -188,7 +235,7 @@ class _RegisterCompanystate extends State<RegisterCompany> {
                     ),
                     onPressed: () {
                       if (formKey.currentState!.validate()) {
-                        registrcontroller.submitRegister('Company',context);
+                        registrcontroller.submitRegister('Company', context);
                       }
                     },
                     style: const NeumorphicStyle(

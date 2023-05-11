@@ -5,6 +5,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 
 import '../Disabled_person/Speech.dart';
+import '../Services/FirebaseAuth.dart';
+import '../auth/Admin/MainAdmin.dart';
 import '../auth/Dashboard/dashboard.dart';
 import '../auth/register_page.dart';
 import 'SpeechController.dart';
@@ -63,25 +65,20 @@ class LoginViewModel extends GetxController {
   }
 
   void submitLogin()async {
+
     // BuildContext context;
-    Get.to(dashboard());
+    // Get.to(MainScreen());
     // SharedPreferences _prefe=await SharedPreferences.getInstance();
     //
-    // if (validateLogin()) {
-    //  await _auth.signInWithEmailAndPassword(email: email, password: password)
-    //      .then((value) => print(value.user) );
-    //  var user=_auth.currentUser;
-    //  // String? email=user?.email;
-    //  _prefe.setString(Data_Current_User, json.encode(user?.uid));
-    // print(_prefe.getString(Data_Current_User));
-    //  Get.snackbar('Login', 'Login successfully');
-    //  AuthService().CheckForUser(email);
-    //
-    //  Get.to(Dashboard());
-    //
-    // } else {
-    //   Get.snackbar('Login', 'Invalid email or password');
-    // }
+    if (validateLogin()) {
+      Firebase_Auth().Login(email,password);
+    }else{
+
+      print('false');
+    }
+
+
+
   }
 
 
