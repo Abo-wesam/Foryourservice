@@ -1,3 +1,7 @@
 {
-    "java.configuration.updateBuildConfiguration": "automatic"
+    "java.configuration.updateBuildConfiguration": "automatic",
+    "dart.debugExternalLibraries": true,
+    "dart.debugSdkLibraries": true,
+    // "dart.flutterTerminateTimeout": 5000
+
 }

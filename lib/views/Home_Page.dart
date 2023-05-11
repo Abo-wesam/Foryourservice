@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 
 
+import '../Services/FirebaseAuth.dart';
 import '../helper/constant.dart';
 
 class HomePage extends StatefulWidget {
@@ -18,9 +19,7 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     double screenHeight = MediaQuery.of(context).size.height;
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Home' ,style: TextStyle(),),
-      ),
+
       body:
       // ListView.separated(
       //    scrollDirection: Axis.horizontal,

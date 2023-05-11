@@ -5,15 +5,17 @@ import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_state_manager/src/simple/get_view.dart';
 import '../../RecordPage.dart';
+import '../../Services/FirebaseAuth.dart';
+import '../../utils/DashbordContent.dart';
 import '../../view_model/SpeechController.dart';
 import '../../view_model/dashboard_view_model.dart';
 import '../../views/Home_Page.dart';
 
-
-class dashboard   extends StatefulWidget {
-@override
-_dashboarde createState() => _dashboarde();
+class dashboard extends StatefulWidget {
+  @override
+  _dashboarde createState() => _dashboarde();
 }
+
 class _dashboarde extends State<dashboard> {
   int currentIndex = 0;
 
@@ -22,28 +24,28 @@ class _dashboarde extends State<dashboard> {
       currentIndex = index;
     });
   }
+
   @override
   Widget build(BuildContext context) {
-
+    final role =Firebase_Auth().getRoles();
     final speech = Get.put(SpeechController());
     final Size size = MediaQuery.of(context).size;
     return Scaffold(
+      appBar: AppBar(
+        leading: BackButton(
+          color: Colors.black,
+          onPressed: () => Firebase_Auth().LogoutToLogin(), // <-- SEE HERE
+        ),
+        title: Dashbordcontent.hedercontent(currentIndex, role!)
+      ),
       backgroundColor: Colors.white10,
       body: Stack(
         children: [
-            IndexedStack(
-              index: currentIndex,
-              children: <Widget>[
-                HomePage(),
-                LoginPage(),
-                HomePage(),
-                LoginPage(),
-
-              ],
-            ),
+          IndexedStack(
+            index: currentIndex,
+            children:Dashbordcontent.getchildren(role)
+          ),
           // controller.currentIndex==0 ? const HomePage(): controller.currentIndex==1 ? LoginPage() :LoginPage()
-
-
 
           Positioned(
             bottom: 0,
@@ -52,88 +54,8 @@ class _dashboarde extends State<dashboard> {
               width: size.width,
               height: 80,
               child: Stack(
-                clipBehavior: Clip.none,
-                children: [
-
-                  CustomPaint(
-                    size: Size(size.width, 80),
-                    painter: BNBCustomPainter(),
-                  ),
-                  Center(
-                    heightFactor: 0.6,
-                    child: FloatingActionButton(backgroundColor: Colors.orange,
-                      child:Icon(speech.isListening.value?Icons.mic:Icons.mic_none),
-                        // AvatarGlow(
-                        //   animate: speech.isListening.value,
-                        //   glowColor: Colors.blue,
-                        //   endRadius: 90.0,
-                        //   duration: Duration(milliseconds: 2000),
-                        //   repeat: true,
-                        //   repeatPauseDuration: Duration(milliseconds: 100),
-                        //   child: FloatingActionButton(
-                        //     child: Icon(speech.isListening.value?Icons.mic:Icons.mic_none),
-                        //     onPressed: (){
-                        //       speech.listen();},
-                        //   ),
-                        //
-                        //
-                        // ),
-                        // Icon(Icons.mic),
-                        // child: Icon(Icons.mic),
-
-                        elevation: 0.1,
-                        onPressed: () {
-                          speech.listen();
-                        }),
-                  ),
-                  Container(
-                    width: size.width,
-                    height: 80,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        IconButton(
-                          icon: Icon(
-                            Icons.home,
-                            color: currentIndex == 0 ? Colors.orange : Colors.grey.shade400,
-                          ),
-                          onPressed: () {
-                           setBottomBarIndex(0);
-                          },
-                          splashColor: Colors.white,
-                        ),
-                        IconButton(
-                            icon: Icon(
-                              Icons.person,
-                              color: currentIndex == 1 ? Colors.orange : Colors.grey.shade400,
-                            ),
-                            onPressed: () {
-                             setBottomBarIndex(1);
-                            }),
-                        Container(
-                          width: size.width * 0.20,
-                        ),
-                        IconButton(
-                            icon: Icon(
-                              Icons.schedule,
-                              color: currentIndex == 2 ? Colors.orange : Colors.grey.shade400,
-                            ),
-                            onPressed: () {
-                              setBottomBarIndex(2);
-                            }),
-                        IconButton(
-                            icon: Icon(
-                              Icons.settings,
-                              color: currentIndex == 3 ? Colors.orange : Colors.grey.shade400,
-                            ),
-                            onPressed: () {
-                             setBottomBarIndex(3);
-                            }),
-                      ],
-                    ),
-                  )
-                ],
-              ),
+                  clipBehavior: Clip.none,
+                  children: Dashbordcontent.ContentOfdownbar(role, size, setBottomBarIndex, currentIndex, speech)),
             ),
           )
         ],
@@ -153,7 +75,8 @@ class BNBCustomPainter extends CustomPainter {
     path.moveTo(0, 20); // Start
     path.quadraticBezierTo(size.width * 0.20, 0, size.width * 0.35, 0);
     path.quadraticBezierTo(size.width * 0.40, 0, size.width * 0.40, 20);
-    path.arcToPoint(Offset(size.width * 0.60, 20), radius: Radius.circular(20.0), clockwise: false);
+    path.arcToPoint(Offset(size.width * 0.60, 20),
+        radius: Radius.circular(20.0), clockwise: false);
     path.quadraticBezierTo(size.width * 0.60, 0, size.width * 0.65, 0);
     path.quadraticBezierTo(size.width * 0.80, 0, size.width, 20);
     path.lineTo(size.width, size.height);

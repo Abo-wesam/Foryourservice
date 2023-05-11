@@ -1,7 +1,10 @@
 import 'dart:io';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:intl/intl.dart';
 import '../Services/FirebaseAuth.dart';
 import '../model/Binding/CompanyModel.dart';
 import '../model/Binding/CustomerModel.dart';
@@ -16,16 +19,19 @@ class RegisterViewModel extends GetxController with SingleGetTickerProviderMixin
   late TextEditingController AddressdController = TextEditingController();
   late TextEditingController DescrptionController = TextEditingController();
   late TextEditingController PhotoController = TextEditingController();
-  late TextEditingController TYpeCompanyController = TextEditingController();
+  late TextEditingController phoneController = TextEditingController();
+  late TextEditingController CompanyType= TextEditingController();
+  late TextEditingController TYpeUSerController = TextEditingController();
 late String id, FullName, email, password, confirmPassword;
   String? emailError, passwordError,nameError;
+
   // final bike = ''.obs;
    @override
      void onInit() {
       // tabController = TabController(vsync: this, length: 2);
       // bike.value='customer view model';
      nameController.value.text.isEmpty;
-     emailController.value.text.isEmpty;
+     emailController.value.text=='';
      passwordController.value.text.isEmpty;
      passwordConfirmController.value.text.isEmpty;
      AddressdController.value.text.isEmpty;
@@ -84,6 +90,19 @@ String? errorpassmatch(String v){
     passwordError = '';
     update();
   }
+  int  get typecompany{
+    if(CompanyType.text=='Delivery Services'){
+      return 1;
+    }else if (CompanyType.text=='Transportation'){
+      return 2;
+    }
+     return 0;
+  }
+ void  setcompanytyp(String comp){
+    CompanyType.text=comp;
+    print(CompanyType.text);
+  }
+
   bool validateRegister() {
     resetErrorText();
 
@@ -116,41 +135,73 @@ String? errorpassmatch(String v){
     return isValid;
   }
  Future<void>  submitRegister(String typeOfRegist,BuildContext context) async{
+   DateTime dateTime = DateTime.now();
+   String formattedDate = DateFormat('yyyy-MM-dd').format(dateTime);
    _auth = FirebaseAuth.instance;
-     print(PhotoController.text);
-     if(typeOfRegist=='Company'){
-
-       var companymodel=CompanyModel(Name: nameController.value.text,Email: emailController.value.text,
+     print(CompanyType.text);
+       var _usermodel=UserModel(Name: nameController.value.text,Email: emailController.value.text,
          Address: AddressdController.value.text,
          Password: passwordController.value.text,
-         comp_Type: 1,
-         is_active: false,
+         comp_Type:typecompany,
+         is_active: (TYpeUSerController.text=='Customr'?true:false) ,
          Descrption: DescrptionController.value.text,
          Photo:PhotoController.text,
-         Created_ON: DateTime.now(),
-       );
-       Firebase_Auth(_auth).signUpWithEmail(companymodel,context,typeOfRegist );
-     }
-     else{
+         phone:phoneController.text ,
+         type_user:(TYpeUSerController.text=='Customr'?1:2) ,
+         Created_ON:  formattedDate,
 
-       var custmodel=CustomerModel(
-         Name: nameController.value.text,
-         Email: emailController.value.text,
-         Address: AddressdController.value.text,
-         Password: passwordController.value.text,
-         Photo:PhotoController.value.text,
-         Created_ON: DateTime.now(),
        );
-       Firebase_Auth(_auth).signUpWithEmail(custmodel,context,typeOfRegist );
+       Firebase_Auth().signUpWithEmail(_usermodel,context,typeOfRegist );
 
-     }
-   nameController.value.text.isEmpty;
 
   }
   Future uploadFile() async{
 
 
   }
+  void GetImagePicker() async {
+    ImagePicker imagePicker = ImagePicker();
+    XFile? file = await imagePicker.pickImage(
+        source: ImageSource.gallery);
+    print('${file?.path}');
+
+    if (file == null) return;
+    //Import dart:core
+    String uniqueFileName =
+    DateTime.now().millisecondsSinceEpoch.toString();
+
+    /*Step 2: Upload to Firebase storage*/
+    //Install firebase_storage
+    //Import the library
+
+    //Get a reference to storage root
+    Reference referenceRoot = FirebaseStorage.instance.ref();
+    Reference referenceDirImages =
+    referenceRoot.child('images');
+
+    //Create a reference for the image to be stored
+    Reference referenceImageToUpload =
+    referenceDirImages.child('name');
+
+    //Handle errors/success
+    try {
+      //Store the file
+      await referenceImageToUpload.putFile(File(file!.path));
+      //Success: get the download URL
+   PhotoController =
+      (await referenceImageToUpload.getDownloadURL())
+    as TextEditingController;
+    print(PhotoController.text);
+    } catch (error) {
+    //Some error occurred
+    }
+  }
+
+ Future<List<UserModel>> GetuserProfile() {
+     return   Firebase_Auth().GetUser();
+ }
+
+
 
 
 }

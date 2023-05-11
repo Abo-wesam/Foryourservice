@@ -23,6 +23,7 @@ class LoginPage extends GetWidget<LoginViewModel>  {
   
   @override
   Widget build(BuildContext context)  {
+
     double screenHeight = MediaQuery.of(context).size.height;
      final speech = Get.put(SpeechController());
     // NameOfClass _nameclass=NameOfClass();
@@ -57,12 +58,12 @@ class LoginPage extends GetWidget<LoginViewModel>  {
                 height: 150,
                 width: 150,
                 decoration: BoxDecoration(
-                  // image:  DecorationImage(
-                  //   alignment: Alignment.center,
-                  //   scale: 2.5,
-                    
-                  //   // image: AssetImage("images/logo.png"),
-                  // ),
+                  image:  const DecorationImage(
+                    alignment: Alignment.center,
+                    scale: 2.5,
+
+                    image: AssetImage("assets/images/loog.png"),
+                  ),
                   border: Border.all(
                       width: 1.5,
                       color: Colors.blueAccent,
