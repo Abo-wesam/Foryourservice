@@ -1,15 +1,11 @@
-import 'dart:html';
-
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:foryourservice/model/Binding/CompanyModel.dart';
 import 'package:foryourservice/view_model/SpeechController.dart';
-
-
 import '../auth/Dashboard/dashboard.dart';
 import '../auth/login_page.dart';
 import '../views/Home_Page.dart';
+import '../views/Profile.dart';
 
 class Dashbordcontent{
 
@@ -39,13 +35,13 @@ if(user=='Customer'){
   if(user=='Customer'){
     return <Widget>[
       HomePage(),
-      LoginPage(),
+      Profile(),
       HomePage(),
     ];
   }else{
     return <Widget>[
       HomePage(),
-      LoginPage(),
+      Profile(),
       HomePage(),
       LoginPage(),
 

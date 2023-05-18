@@ -1,6 +1,8 @@
 
 
 import 'package:get/get.dart';
+import '../../view_model/RequestController.dart';
+import '../../view_model/SettingController.dart';
 import '../../view_model/SpeechController.dart';
 import '../../view_model/dashboard_view_model.dart';
 import '../../view_model/login_view_model.dart';
@@ -14,6 +16,8 @@ class Binding extends Bindings {
     Get.lazyPut<SpeechController>(() => SpeechController());
     Get.lazyPut<RegisterViewModel>(() => RegisterViewModel());
     Get.lazyPut<DashboardController>(() => DashboardController());
+    Get.lazyPut<SettingController>(() => SettingController());
+    Get.lazyPut<RequestController>(() => RequestController());
 
   }
 }

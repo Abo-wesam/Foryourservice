@@ -200,6 +200,21 @@ String? errorpassmatch(String v){
  Future<List<UserModel>> GetuserProfile() {
      return   Firebase_Auth().GetUser();
  }
+  Future<UserModel?> GetUserbyid()async {
+     return  await Firebase_Auth().GetUserbyid();
+ }
+
+  void UpdateUser(UserModel userdata) async{
+    userdata.Address=AddressdController.value.text;
+userdata.Name  =nameController.value.text;
+userdata.Email  =emailController.value.text;
+userdata.Password  =passwordController.value.text;
+userdata.Photo  = PhotoController.text;
+userdata.phone  = phoneController.text ;
+     
+await Firebase_Auth().UpdateUserProfile(userdata);
+
+  }
 
 
 

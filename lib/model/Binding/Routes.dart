@@ -1,4 +1,3 @@
-
 import 'package:get/get_navigation/src/routes/get_route.dart';
 import '../../RecordPage.dart';
 import '../../auth/Admin/MainAdmin.dart';
@@ -7,13 +6,15 @@ import '../../auth/login_page.dart';
 import '../../auth/register_page.dart';
 
 import '../../views/Adminscreen/EditCompany.dart';
+import '../../views/Companies.dart';
 import '../../views/Profile.dart';
+import '../../views/Requests/Request_View.dart';
+import '../../views/Requests/Requestscomponent/DataRequest_component.dart';
+import '../../views/Requests/Requestscomponent/PlaceMarkerPage.dart';
 import '../../views/onboarding/Getstarted.dart';
 import 'Binding.dart';
 
-
 class Routes {
-
   Routes._();
   static String HomePageScreens = '/HomePageScreen';
   static String Login = '/Login';
@@ -23,56 +24,59 @@ class Routes {
   static String Addroles = '/Addrole';
   static String EditCompanys = '/EditCompany';
   static String Getstartedpage = '/Getstartedpage';
-  static String profile = '/';
+  static String profile = '/Profile';
+  static String Companiesscreen = '/Companies';
+  static String Request = '/RequestPage';
+  static String Location = '/';
 
-
-
-
-
-
-  static List<GetPage> routes =
-  [
+  static List<GetPage> routes = [
     GetPage(
       name: Routes.Login,
       page: () => LoginPage(),
-      
     ),
-
     GetPage(
       name: Routes.Register,
-      page: () =>  RegisterPage(),
+      page: () => RegisterPage(),
     ),
     GetPage(
-    name: Routes.HomePageScreens,
-    page: () =>  HomePageScreen(),
-  ),
+      name: Routes.HomePageScreens,
+      page: () => HomePageScreen(),
+    ),
     GetPage(
-    name: Routes.Dashboard,
-    page: () =>  dashboard(),
-  ),GetPage(
-    name: Routes.MainAdmin,
-    page: () =>  MainScreen(),
-  ),
-
+      name: Routes.Dashboard,
+      page: () => dashboard(),
+    ),
+    GetPage(
+      name: Routes.MainAdmin,
+      page: () => MainScreen(),
+    ),
     GetPage(
       name: Routes.EditCompanys,
-      page: () =>  EditCompany(),
+      page: () => EditCompany(),
     ),
     GetPage(
       name: Routes.Getstartedpage,
-      page: () =>  Getstarted(),
-    ),GetPage(
+      page: () => Getstarted(),
+    ),
+    GetPage(
       name: Routes.profile,
-      page: () =>  Profile(),
+      page: () => Profile(),
+    ),
+    GetPage(
+      name: Routes.Companiesscreen,
+      page: () => Companies(),
+    ),
+    GetPage(
+      name: Routes.Request,
+      page: () => RequestPage(),
+    ),
+    GetPage(
+      name: Routes.Location,
+      page: () => PlaceMarkerBody(),
     ),
 
   ];
-
-
-
-
-
 }
 
-  /// Add this list variable into your GetMaterialApp as the value of getPages parameter.
-  /// You can get the reference to the above GetMaterialApp code.
+/// Add this list variable into your GetMaterialApp as the value of getPages parameter.
+/// You can get the reference to the above GetMaterialApp code.

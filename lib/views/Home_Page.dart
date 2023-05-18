@@ -1,9 +1,12 @@
 
 import 'package:flutter/material.dart';
+import 'package:foryourservice/views/Companies.dart';
+import 'package:get/get.dart';
 
 
 import '../Services/FirebaseAuth.dart';
 import '../helper/constant.dart';
+import '../model/Binding/Routes.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -34,7 +37,9 @@ class _HomePageState extends State<HomePage> {
               itemBuilder: (context, index) {
 
                 return  InkWell(
-                      onTap: () {  clickbut();},
+                      onTap: () {
+                       _handleTap( DataOfService[index].typeComp);
+                      },
                       child: Container(
                         // height: 70,
                         // width: 30,
@@ -108,8 +113,8 @@ class _HomePageState extends State<HomePage> {
     // )
     );
   }
-  void clickbut(){
-  print("Container clicked");
+void _handleTap(int index) {
+ Get.toNamed(Routes.Companiesscreen, arguments: {'index':index});
 }
 
 }

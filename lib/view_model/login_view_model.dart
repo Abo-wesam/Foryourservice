@@ -1,9 +1,6 @@
-
-
-
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
-
 import '../Disabled_person/Speech.dart';
 import '../Services/FirebaseAuth.dart';
 import '../auth/Admin/MainAdmin.dart';
@@ -12,17 +9,19 @@ import '../auth/register_page.dart';
 import 'SpeechController.dart';
 
 
-
-
 class LoginViewModel extends GetxController {
   // SpeechController spech=Get.put(SpeechController());
+   final FirebaseAuth _auth = FirebaseAuth.instance;
+
   Speech _Speech = Speech();
   late String email, password;
   String? emailError, passwordError;
   @override
   void onInit() {
+    // userstatues();
     // spech.HandlingVoic();
    // _Speech.speak("Login");
+
     email = "";
     password = "";
     emailError = '';
@@ -35,6 +34,7 @@ class LoginViewModel extends GetxController {
     passwordError = '';
     update();
   }
+  
 
   bool validateLogin() {
     //check method
@@ -81,6 +81,15 @@ class LoginViewModel extends GetxController {
 
   }
 
+void userstatues() async{
+
+  final user= _auth.currentUser;
+  print(user);
+    if(user!=null){
+      _auth.signOut();
+    }
+
+}
 
  //
  // void  handlePasswordReset()async {

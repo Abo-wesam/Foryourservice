@@ -11,7 +11,7 @@ class UserModel {
   late String Email;
   late String Descrption;
   late String Photo;
-  final String? phone;
+  late  String? phone;
   late int? type_user;
   late int comp_Type;
   late bool is_active;

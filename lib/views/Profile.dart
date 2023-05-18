@@ -34,12 +34,16 @@ class _ProfileState extends State<Profile> {
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16),
         child: FutureBuilder(
-            future: registrcontroller.GetuserProfile(),
+            future: registrcontroller.GetUserbyid(),
             builder: (
               context,
               snapshot,
             ) {
+              print(snapshot.connectionState);
+
               if (snapshot.connectionState == ConnectionState.done) {
+
+                print('Data${snapshot.hasData}');
                 if (snapshot.hasData) {
                   UserModel userdata = snapshot.data as UserModel;
                    registrcontroller.AddressdController = TextEditingController(text: userdata.Address);
@@ -48,6 +52,8 @@ class _ProfileState extends State<Profile> {
                    registrcontroller.DescrptionController = TextEditingController(text: userdata.Descrption);
                    registrcontroller.phoneController = TextEditingController(text: userdata.phone);
                    registrcontroller.PhotoController = TextEditingController(text: userdata.Photo);
+                  //  registrcontroller.TYpeUSerController = TextEditingController(text: userdata.type_user.toString());
+                  //  registrcontroller.CompanyType = TextEditingController(text: userdata.comp_Type.toString());
 
 
                   return Container(
@@ -185,7 +191,7 @@ class _ProfileState extends State<Profile> {
                                   )
                                 : const SizedBox(height: 5),
                           ),
-                          const SizedBox(height: 40),
+                          const SizedBox(height: 20),
                           Container(
                             width: 100,
                             height: 40,
@@ -215,7 +221,10 @@ class _ProfileState extends State<Profile> {
                                               BorderRadius.circular(20))),
                                 ),
                                 OutlinedButton(
-                                  onPressed: () {},
+                                  onPressed: () {
+                                    
+                                    registrcontroller.UpdateUser(userdata);
+                                  },
                                   child: Text(
                                     'Save',
                                     style: TextStyle(
