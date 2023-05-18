@@ -43,19 +43,20 @@ double widthscreenSize(BuildContext context) {
 }
 
 List<Service> DataOfService = [
-  Service(images:'assets/images/mike.png', NameService:'Delivery Services',decirbtion:'hhhhhhhh'),
-  Service(images:'assets/images/mike.png', NameService:'Transportation',decirbtion:'hhhhhhhh'),
+  Service(images:'assets/images/mike.png', NameService:'Delivery Services',decirbtion:'hhhhhhhh', typeComp: 1),
+  Service(images:'assets/images/mike.png', NameService:'Transportation',decirbtion:'hhhhhhhh', typeComp: 2),
   // Service('images/image-taxi.png', 'Delivery Services','hhhhhhhh')
 ];
 
 
 class Service {
+  int typeComp;
    String images;
   late String NameService;
   late String decirbtion;
 
 
-  Service( {required this.images,  required this.NameService,  required this.decirbtion});
+  Service( {required this.typeComp,required this.images,  required this.NameService,  required this.decirbtion});
 }
 String logimage='assets/images/loog.png';
 

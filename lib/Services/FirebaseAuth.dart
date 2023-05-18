@@ -21,7 +21,7 @@ class Firebase_Auth with ChangeNotifier {
       FirebaseFirestore.instance.collection('RoleDetals');
 
   UserModel? _user;
-  UserModel get user=>_user!;
+  UserModel get user => _user!;
 
   Future<void> signUpWithEmail(
       UserModel model, BuildContext context, String typeOfRegist) async {
@@ -46,54 +46,45 @@ class Firebase_Auth with ChangeNotifier {
     }
   }
 
-
-
   Future<void> Login(String email, String Password) async {
-
     try {
       _auth.signInWithEmailAndPassword(email: email, password: Password);
-   final userauth=_auth.currentUser;
-   if(userauth != null){
-     _collectionReference.where('User_id',isEqualTo: _auth.currentUser?.uid)
-         .get().then((snapshot){
-           if(snapshot.docs.isNotEmpty){
-           final GetUser=  snapshot.docs.map((e) =>  UserModel.fromsnapshot(e as DocumentSnapshot<Map<String, dynamic>>))
-                 .toList();
-           GetUser.forEach((element) {
-             _user=element;
-             if(element.is_active==true){
-               if(element.Role=='Customer'){
-                 Get.to(dashboard());
-                 Get.snackbar('Login', 'Login successfull');
-
-               }
-               if(element.Role=='Company'){
-                 print(user.Role);
-                 Get.to(dashboard());
-                 Get.snackbar('Login', 'Login successfull');
-               }
-             }else{
-               Get.snackbar(
-                           'Login', 'Check your e-mail or adminstration to verify access');
-                         _auth.signOut();
-                       Get.to(LoginPage());
-             }
-
-
-           });
-
-           }else{
-
-             navigator?.pushNamed(Routes.MainAdmin);
-               Get.snackbar('Login', 'Login successfull');
-
-
-           }
-
-     });
-
-   }
-
+      final userauth = _auth.currentUser;
+      if (userauth != null) {
+        _collectionReference
+            .where('User_id', isEqualTo: _auth.currentUser?.uid)
+            .get()
+            .then((snapshot) {
+          if (snapshot.docs.isNotEmpty) {
+            final GetUser = snapshot.docs
+                .map((e) => UserModel.fromsnapshot(
+                    e as DocumentSnapshot<Map<String, dynamic>>))
+                .toList();
+            GetUser.forEach((element) {
+              _user = element;
+              if (element.is_active == true) {
+                if (element.Role == 'Customer') {
+                  Get.to(dashboard());
+                  Get.snackbar('Login', 'Login successfull');
+                }
+                if (element.Role == 'Company') {
+                  print(user.Role);
+                  Get.to(dashboard());
+                  Get.snackbar('Login', 'Login successfull');
+                }
+              } else {
+                Get.snackbar('Login',
+                    'Check your e-mail or adminstration to verify access');
+                _auth.signOut();
+                Get.to(LoginPage());
+              }
+            });
+          } else {
+            navigator?.pushNamed(Routes.MainAdmin);
+            Get.snackbar('Login', 'Login successfull');
+          }
+        });
+      }
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
         Get.snackbar('Login', 'No user found for that email');
@@ -113,34 +104,61 @@ class Firebase_Auth with ChangeNotifier {
     }
   }
 
-String? getRoles()  {
-
-  String? Role;
-    _collectionReference.where('User_id',isEqualTo: _auth.currentUser?.uid)
-        .get().then((snapshot) {
-     if(snapshot.docs.isNotEmpty) {
-       final GetUser = snapshot.docs.map((e) =>
-           UserModel.fromsnapshot(e as DocumentSnapshot<Map<String, dynamic>>))
-           .toList();
-       GetUser.forEach((element) {
-         Role = element.Role;
-       });
-     }
-
-   });
+  Future<String?> getRoles() async {
+    final userid = _auth.currentUser?.uid;
+    String? Role;
+    final Result = await _collectionReference
+        .where('User_id', isEqualTo: userid)
+        .get()
+        .then((snapshot) {
+      if (snapshot.docs.isNotEmpty) {
+        final GetUser = snapshot.docs
+            .map((e) => UserModel.fromsnapshot(
+                e as DocumentSnapshot<Map<String, dynamic>>))
+            .toList();
+        GetUser.forEach((element) {
+          Role = element.Role;
+        });
+      }
+    });
 
     return Role;
+  }
+
+  Future<UserModel?> GetUserbyid() async {
+    UserModel? response;
+
+    await _collectionReference
+        .where('User_id', isEqualTo: _auth.currentUser?.uid)
+        .get()
+        .then((snapshot) {
+      if (snapshot.docs.isNotEmpty) {
+        final getdata = snapshot.docs
+            .map((e) => UserModel.fromsnapshot(
+                e as DocumentSnapshot<Map<String, dynamic>>))
+            .toList();
+        getdata.forEach((element) {
+          response = element;
+        });
+      }
+    });
+    return response;
   }
 
   Future<List<UserModel>> GetUser() async {
     List<UserModel> response = [];
 
-        _collectionReference.where('User_id',isEqualTo: _auth.currentUser?.uid)
-            .get().then((snapshot) {
-      if(snapshot.docs.isNotEmpty) {
-         response = snapshot.docs.map((e) =>
-            UserModel.fromsnapshot(e as DocumentSnapshot<Map<String, dynamic>>))
-            .toList();}});
+    _collectionReference
+        .where('User_id', isEqualTo: _auth.currentUser?.uid)
+        .get()
+        .then((snapshot) {
+      if (snapshot.docs.isNotEmpty) {
+        response = snapshot.docs
+            .map((e) => UserModel.fromsnapshot(
+                e as DocumentSnapshot<Map<String, dynamic>>))
+            .toList();
+      }
+    });
     return response;
   }
 
@@ -149,16 +167,15 @@ String? getRoles()  {
       model.User_id = id;
       await _collectionReference.doc(model.User_id).set(model.tojson());
       if (model?.type_user == 1) {
-        model.Role='Customer';
+        model.Role = 'Customer';
         await _collectionReference.doc(model.User_id).set(model.tojson());
-
       }
       if (model?.type_user == 2) {
-        model.Role='Company';
+        model.Role = 'Company';
+
         await _collectionReference.doc(model.User_id).set(model.tojson());
         Get.snackbar(
             'Vreification', 'please check your email for vreification');
-      
       }
       Get.to(LoginPage());
     } on FirebaseAuthException catch (e) {
@@ -173,10 +190,43 @@ String? getRoles()  {
         .then((_) => Get.snackbar('Vreification', 'Success'))
         .catchError((error) => print('Failed: $error'));
   }
-  void LogoutToLogin(){
+
+  void LogoutToLogin() {
     _auth.signOut();
     Get.to(LoginPage());
+  }
 
+  UpdateUserProfile(UserModel user) async {
+    final Result =
+        await _collectionReference.doc(user.User_id).update(user.tojson());
+  }
+
+  Future<List<UserModel>> GetAllCompany() async {
+    List<UserModel> Result;
+    final getdata= await _collectionReference
+        .where('type_user', isEqualTo: 2)
+        .where('is_active', isEqualTo: true)
+        .get();
+
+    Result= getdata.docs
+            .map((e) => UserModel.fromsnapshot(
+                e as DocumentSnapshot<Map<String, dynamic>>))
+            .toList();
+
+return Result;
 
   }
+  Future<UserModel?> GetcompanyById(String User_id) async{
+    UserModel? Result;
+    final getdata= await _collectionReference
+        .where('User_id', isEqualTo: User_id)
+        .get();
+    Result = getdata.docs
+        .map((e) => UserModel.fromsnapshot(
+        e as DocumentSnapshot<Map<String, dynamic>>)).single;
+
+    return Result;
+
+  }
+
 }

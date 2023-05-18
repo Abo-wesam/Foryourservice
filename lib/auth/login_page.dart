@@ -26,6 +26,7 @@ class LoginPage extends GetWidget<LoginViewModel>  {
 
     double screenHeight = MediaQuery.of(context).size.height;
      final speech = Get.put(SpeechController());
+     controller.userstatues();
     // NameOfClass _nameclass=NameOfClass();
 
     return Scaffold(

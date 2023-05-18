@@ -198,17 +198,17 @@ class _RegisterCompanystate extends State<RegisterCompany> {
 
                       //Create a reference for the image to be stored
                       Reference referenceImageToUpload =
-                          referenceDirImages.child('name');
+                          referenceDirImages.child('photo');
 
                       //Handle errors/success
                       try {
                         //Store the file
                         await referenceImageToUpload.putFile(File(file!.path));
                         //Success: get the download URL
-                        registrcontroller.PhotoController =
-                            (await referenceImageToUpload.getDownloadURL())
-                                as TextEditingController;
-                        print(registrcontroller.PhotoController.text);
+                        registrcontroller.PhotoController.text =
+                            await referenceImageToUpload.getDownloadURL()
+                              ;
+                        print('photopath${registrcontroller.PhotoController.text}');
                       } catch (error) {
                         //Some error occurred
                       }

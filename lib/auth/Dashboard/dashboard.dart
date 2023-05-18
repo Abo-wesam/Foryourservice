@@ -36,14 +36,14 @@ class _dashboarde extends State<dashboard> {
           color: Colors.black,
           onPressed: () => Firebase_Auth().LogoutToLogin(), // <-- SEE HERE
         ),
-        title: Dashbordcontent.hedercontent(currentIndex, role!)
+        title: Dashbordcontent.hedercontent(currentIndex, role.toString())
       ),
       backgroundColor: Colors.white10,
       body: Stack(
         children: [
           IndexedStack(
             index: currentIndex,
-            children:Dashbordcontent.getchildren(role)
+            children:Dashbordcontent.getchildren(role.toString())
           ),
           // controller.currentIndex==0 ? const HomePage(): controller.currentIndex==1 ? LoginPage() :LoginPage()
 
@@ -55,7 +55,7 @@ class _dashboarde extends State<dashboard> {
               height: 80,
               child: Stack(
                   clipBehavior: Clip.none,
-                  children: Dashbordcontent.ContentOfdownbar(role, size, setBottomBarIndex, currentIndex, speech)),
+                  children: Dashbordcontent.ContentOfdownbar(role.toString(), size, setBottomBarIndex, currentIndex, speech)),
             ),
           )
         ],

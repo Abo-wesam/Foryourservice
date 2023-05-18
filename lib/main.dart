@@ -51,7 +51,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
       ),
       initialBinding: Binding(),
-      initialRoute: Routes.profile,
+      initialRoute: Routes.Location,
       getPages: Routes.routes,
 
       // home:  LoginPage(),
