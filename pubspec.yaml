@@ -59,6 +59,8 @@ dependencies:
   flutter_onboarding_screen: ^2.0.2
   google_maps_flutter: ^2.2.6
   geolocator: ^9.0.2
+  auto_size_text: ^3.0.0
+  shared_preferences: ^2.1.1
 dev_dependencies:
   flutter_test:
     sdk: flutter

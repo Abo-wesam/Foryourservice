@@ -2,6 +2,8 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 
+import '../model/Binding/Service.dart';
+
 const primaryColor=Color.fromRGBO(0, 197, 105, 1);
 // const primaryColor = Color(0xFF2697FF);
 const secondaryColor = Color(0xFF2A2D3E);
@@ -48,15 +50,14 @@ List<Service> DataOfService = [
   // Service('images/image-taxi.png', 'Delivery Services','hhhhhhhh')
 ];
 
-
-class Service {
-  int typeComp;
-   String images;
-  late String NameService;
-  late String decirbtion;
-
-
-  Service( {required this.typeComp,required this.images,  required this.NameService,  required this.decirbtion});
-}
+// class Service {
+//   int typeComp;
+//    String images;
+//   late String NameService;
+//   late String decirbtion;
+//
+//
+//   Service( {required this.typeComp,required this.images,  required this.NameService,  required this.decirbtion});
+// }
 String logimage='assets/images/loog.png';
 

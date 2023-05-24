@@ -7,6 +7,7 @@ import 'package:get/get_state_manager/src/simple/get_view.dart';
 import '../../RecordPage.dart';
 import '../../Services/FirebaseAuth.dart';
 import '../../utils/DashbordContent.dart';
+import '../../view_model/HandlingSpeech/ISpeechTotext.dart';
 import '../../view_model/SpeechController.dart';
 import '../../view_model/dashboard_view_model.dart';
 import '../../views/Home_Page.dart';
@@ -17,6 +18,7 @@ class dashboard extends StatefulWidget {
 }
 
 class _dashboarde extends State<dashboard> {
+
   int currentIndex = 0;
 
   setBottomBarIndex(index) {
@@ -43,7 +45,7 @@ class _dashboarde extends State<dashboard> {
         children: [
           IndexedStack(
             index: currentIndex,
-            children:Dashbordcontent.getchildren(role.toString())
+            children:Dashbordcontent.getchildren(role.toString() )
           ),
           // controller.currentIndex==0 ? const HomePage(): controller.currentIndex==1 ? LoginPage() :LoginPage()
 

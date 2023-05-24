@@ -15,6 +15,7 @@ class UserModel {
   late int? type_user;
   late int comp_Type;
   late bool is_active;
+  late bool isDisablde;
   late String? Role;
   late String Created_ON;
   late String? Updated_ON;
@@ -29,6 +30,7 @@ class UserModel {
       required this.Password,
       required this.comp_Type,
       required this.is_active,
+      required this.isDisablde,
       required this.Descrption,
       required this.Photo,
       this.type_user,
@@ -48,6 +50,7 @@ class UserModel {
         Address: Data['Address'],
         phone: Data['phone'],
         is_active: Data['is_active'],
+      isDisablde: Data['isDisablde'],
         Photo: Data['Photo'],
         comp_Type: Data['comp_Type'],
         type_user: Data['type_user'],
@@ -67,6 +70,7 @@ class UserModel {
       'phone': phone,
       'Photo': Photo,
       'is_active': is_active,
+      'isDisablde': isDisablde,
       'comp_Type': comp_Type,
       'type_user': type_user,
       'Role': Role,
