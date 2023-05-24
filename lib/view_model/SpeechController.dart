@@ -28,6 +28,11 @@ class SpeechController extends GetxController{
   void onReady(){
 
   }
+  @override
+  void dispose() {
+    _speechToText.stop();
+    super.dispose();
+  }
 
 
   void listen() async {
@@ -139,6 +144,23 @@ class SpeechController extends GetxController{
     }
 
   }
+  /*
+  void speakListItems() async {
+
+    List<String> listFromFirebase = [];
+    for (String listItem in listFromFirebase) {
+      await flutterTts.speak(listItem);
+    }
+    String lastSpokenText = await flutterTts.stop();
+    int index = findSelectedIndex(lastSpokenText);
+    if (index != -1) {
+      setState(() {
+        selectedIndex = index;
+      });
+    }
+  }
+  List<String> listFromFirebase = [];
+*/
 
 
 }

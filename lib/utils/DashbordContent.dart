@@ -4,12 +4,13 @@ import 'package:flutter/material.dart';
 import 'package:foryourservice/view_model/SpeechController.dart';
 import '../auth/Dashboard/dashboard.dart';
 import '../auth/login_page.dart';
+import '../view_model/HandlingSpeech/ISpeechTotext.dart';
 import '../views/Home_Page.dart';
 import '../views/Profile.dart';
 
 class Dashbordcontent{
 
-  
+
 static  Widget hedercontent(int currentIndex, String user) {
 if(user=='Customer'){
   return
@@ -32,6 +33,7 @@ if(user=='Customer'){
   }
 
   static  List<Widget> getchildren(String user) {
+     // ISpeechTotext sp;
   if(user=='Customer'){
     return <Widget>[
       HomePage(),

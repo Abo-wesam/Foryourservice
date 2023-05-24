@@ -32,12 +32,12 @@ class DashboardController extends GetxController  {
  //
 Future<List<UserModel>> GetCompany() async {
 
-    final result =await Firebase_Auth().GetUser();
+    final result =await Firebase_Auth().GetAllCompanyforupdate();
     result.forEach((element) {
 
 
     });
-    return await Firebase_Auth().GetUser();
+    return result;
   }
 
   void updateCompany(String? id, bool is_active) {

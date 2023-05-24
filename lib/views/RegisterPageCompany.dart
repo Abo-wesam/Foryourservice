@@ -17,10 +17,23 @@ class RegisterCompany extends StatefulWidget {
 
 class _RegisterCompanystate extends State<RegisterCompany> {
   final formKey = GlobalKey<FormState>();
+  bool isChecked = false;
   @override
   Widget build(BuildContext context) {
-    final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
+    Color getColor(Set<MaterialState> states) {
+      const Set<MaterialState> interactiveStates = <MaterialState>{
+        MaterialState.pressed,
+        MaterialState.hovered,
+        MaterialState.focused,
+      };
+      if (states.any(interactiveStates.contains)) {
+        return Colors.blue;
+      }
+      return Colors.red;
+    }
+
+    final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
     final registrcontroller = Get.put(RegisterViewModel());
     // registrcontroller.TYpeUSerController.text =="";
     return Scaffold(
@@ -32,30 +45,50 @@ class _RegisterCompanystate extends State<RegisterCompany> {
             children: [
               // SizedBox(height: MediaQuery.of(context).size.height * 0.05),
 
-
               SizedBox(height: MediaQuery.of(context).size.height * 0.08),
               Container(
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
+                child: Column(
                   children: [
-                    Text('Type User'),
-                    const SizedBox(width: 20),
-                    DropdownButton(
-                        hint: Text('Choose'),
-                        onChanged: (String? NewValue) {
-                          setState(() {
-                            registrcontroller.TYpeUSerController.text =
-                                NewValue!;
-                            print(registrcontroller.TYpeUSerController.text);
-                          });
-                        },
-                        items:
-                            <String>['Customr', 'Company'].map((String value) {
-                          return DropdownMenuItem<String>(
-                            value: value,
-                            child: Text(value),
-                          );
-                        }).toList()),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text('Type User'),
+                        Checkbox(
+                            value: isChecked,
+                            fillColor:
+                                MaterialStateProperty.resolveWith(getColor),
+                            checkColor: Colors.white,
+                            onChanged: (val) {
+                              setState(() {
+                                isChecked = val!;
+                                registrcontroller.isDisablde=val;
+                              });
+                            }),
+                      ],
+                    ),
+                    Row(
+                      children: [
+                        Text('Type business'),
+                        const SizedBox(width: 20),
+                        DropdownButton(
+                            hint: Text('Choose'),
+                            onChanged: (String? NewValue) {
+                              setState(() {
+                                registrcontroller.TYpeUSerController.text =
+                                    NewValue!;
+                                print(
+                                    registrcontroller.TYpeUSerController.text);
+                              });
+                            },
+                            items: <String>['Customr', 'Company']
+                                .map((String value) {
+                              return DropdownMenuItem<String>(
+                                value: value,
+                                child: Text(value),
+                              );
+                            }).toList()),
+                      ],
+                    )
                   ],
                 ),
               ),
@@ -146,7 +179,7 @@ class _RegisterCompanystate extends State<RegisterCompany> {
                                   setState(() {});
                                 },
                                 items: <String>[
-                                  'DeliveryServices',
+                                  'Delivery Services',
                                   'Transportation'
                                 ].map((String value) {
                                   return DropdownMenuItem<String>(
@@ -206,9 +239,9 @@ class _RegisterCompanystate extends State<RegisterCompany> {
                         await referenceImageToUpload.putFile(File(file!.path));
                         //Success: get the download URL
                         registrcontroller.PhotoController.text =
-                            await referenceImageToUpload.getDownloadURL()
-                              ;
-                        print('photopath${registrcontroller.PhotoController.text}');
+                            await referenceImageToUpload.getDownloadURL();
+                        print(
+                            'photopath${registrcontroller.PhotoController.text}');
                       } catch (error) {
                         //Some error occurred
                       }

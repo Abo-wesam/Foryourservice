@@ -72,6 +72,7 @@ class LoginViewModel extends GetxController {
     //
     if (validateLogin()) {
       Firebase_Auth().Login(email,password);
+
     }else{
 
       print('false');

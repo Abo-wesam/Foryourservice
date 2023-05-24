@@ -1,5 +1,6 @@
 import 'package:get/get_navigation/src/routes/get_route.dart';
 import '../../RecordPage.dart';
+import '../../TestPage.dart';
 import '../../auth/Admin/MainAdmin.dart';
 import '../../auth/Dashboard/dashboard.dart';
 import '../../auth/login_page.dart';
@@ -10,6 +11,8 @@ import '../../views/Companies.dart';
 import '../../views/Profile.dart';
 import '../../views/Requests/Request_View.dart';
 import '../../views/Requests/Requestscomponent/DataRequest_component.dart';
+import '../../views/Requests/Requestscomponent/OrderDelivery.dart';
+import '../../views/Requests/Requestscomponent/OrderTransport.dart';
 import '../../views/Requests/Requestscomponent/PlaceMarkerPage.dart';
 import '../../views/onboarding/Getstarted.dart';
 import 'Binding.dart';
@@ -17,7 +20,7 @@ import 'Binding.dart';
 class Routes {
   Routes._();
   static String HomePageScreens = '/HomePageScreen';
-  static String Login = '/Login';
+  static String Login = '/LoginPage';
   static String Register = '/RegisterPage';
   static String Dashboard = '/dashboard';
   static String MainAdmin = '/MainAdmin';
@@ -27,7 +30,10 @@ class Routes {
   static String profile = '/Profile';
   static String Companiesscreen = '/Companies';
   static String Request = '/RequestPage';
-  static String Location = '/';
+  static String Location = '/Location';
+  static String OrderTransports = '/OrderTransport';
+  static String Orderdeliver = '/OrderDelivery';
+  static String Test = '/MyPage';
 
   static List<GetPage> routes = [
     GetPage(
@@ -73,6 +79,17 @@ class Routes {
     GetPage(
       name: Routes.Location,
       page: () => PlaceMarkerBody(),
+    ),GetPage(
+      name: Routes.OrderTransports,
+      page: () => OrderTransport(),
+    ),
+    GetPage(
+      name: Routes.Orderdeliver,
+      page: () => OrderDelivery(),
+    ),
+    GetPage(
+      name: Routes.Test,
+      page: () => MyPage(),
     ),
 
   ];
