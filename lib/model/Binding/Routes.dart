@@ -14,6 +14,7 @@ import '../../views/Requests/Requestscomponent/DataRequest_component.dart';
 import '../../views/Requests/Requestscomponent/OrderDelivery.dart';
 import '../../views/Requests/Requestscomponent/OrderTransport.dart';
 import '../../views/Requests/Requestscomponent/PlaceMarkerPage.dart';
+import '../../views/Schedule/Schedule.dart';
 import '../../views/onboarding/Getstarted.dart';
 import 'Binding.dart';
 
@@ -34,6 +35,7 @@ class Routes {
   static String OrderTransports = '/OrderTransport';
   static String Orderdeliver = '/OrderDelivery';
   static String Test = '/MyPage';
+  static String Schedules='/';
 
   static List<GetPage> routes = [
     GetPage(
@@ -90,6 +92,10 @@ class Routes {
     GetPage(
       name: Routes.Test,
       page: () => MyPage(),
+    ),
+    GetPage(
+      name: Routes.Schedules,
+      page: () => Schedule(),
     ),
 
   ];

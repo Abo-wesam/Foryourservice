@@ -1,104 +1,65 @@
 import 'package:flutter/material.dart';
 
-import '../../helper/constant.dart';
+import '../../model/Binding/RequestModel.dart';
+import 'Schedule.dart';
 
-class Ongoing extends StatelessWidget {
-  const Ongoing({super.key});
+class ScheduleCompanyGoinggo extends StatelessWidget {
+  const ScheduleCompanyGoinggo({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final double hightScreen = hightscreenSize(context);
-    final widthScreen = widthscreenSize(context);
+    List<Request_Model> requestModel=[];
+    return ListView.builder(
 
-    return Container(
-      decoration: BoxDecoration(
-          border: Border.all(
-            width: 2,
-            color: kTextLigthColor,
+      scrollDirection: Axis.vertical,
+      itemCount: requestModel.length,
+      itemBuilder: (context, index) {
+        final requestModelGoing = requestModel[index];
+        return Padding(
+          padding: const EdgeInsets.all(3.0),
+          child: Card(
+             elevation: 1,
+              shape: const RoundedRectangleBorder(
+                side: BorderSide(
+                  color: Colors.blue,
+                ),
+                borderRadius: BorderRadius.all(Radius.circular(12)),
+              ),
+            child: Column(
 
+              children: <Widget>[
+                ListTile(
+                  leading: const Icon(Icons.album, color: Colors.blue,
+                    size: 30,),
+                  title: Text(requestModelGoing.NameUser!),
+                  subtitle: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(requestModelGoing.Description),
+                      Text(requestModelGoing.TargetDestination),
+                      Text(textAlign: TextAlign.left,  requestModelGoing.Created_ON!),
+                    ],
+                  ),
+                ),
+                ButtonTheme(
+                  // make buttons use the appropriate styles for cards
+                  child: ButtonBar(
+                    children: <Widget>[
+                      ElevatedButton(
+                        style:
+                            ElevatedButton.styleFrom(backgroundColor: Colors.green),
+                        child: const Text('complete'),
+                        onPressed: () {/* ... */},
+                      ),
+                      
+                    ],
+                  ),
+                ),
+              ],
+            ),
           ),
-          borderRadius: const BorderRadius.all(Radius.circular(20))
-
-      ),
-      width: widthScreen,
-      child: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Column(
-          children: [
-            Flexible(
-              flex: 1,
-              fit: FlexFit.loose,
-              child: Row(
-                children: <Widget>[
-                  Flexible(
-                    flex: 1,
-                    fit: FlexFit.tight,
-                    child: Container(
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10),
-                        color: Colors.red,
-                      ), //BoxDecoration
-                    ), //Container
-                  ), //Flexible
-                  SizedBox(
-                    width: 20,
-                  ), //SizedBox
-                  Flexible(
-                    flex: 1,
-                    fit: FlexFit.tight,
-                    child: Container(
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10),
-                          color: Colors.red,
-                        ) //BoxDecoration
-                    ), //Container
-                  ) //Flexible
-                ], //<Widget>[]
-                mainAxisAlignment: MainAxisAlignment.center,
-              ), //Row
-            ),
-
-            SizedBox(height: 20,),
-
-
-
-            Flexible(
-              flex: 2,
-              fit: FlexFit.loose,
-              child: Row(
-                children: <Widget>[
-                  Flexible(
-                    flex: 1,
-                    fit: FlexFit.loose,
-                    child: Container(
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10),
-                        color: Colors.red,
-                      ), //BoxDecoration
-                    ), //Container
-                  ), //Flexible
-                  SizedBox(
-                    width: 20,
-                  ), //SizedBox
-                  Flexible(
-                    flex: 1,
-                    fit: FlexFit.loose,
-                    child: Container(
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10),
-                          color: Colors.red,
-                        ) //BoxDecoration
-                    ), //Container
-                  ) //Flexible
-                ], //<Widget>[]
-                mainAxisAlignment: MainAxisAlignment.center,
-              ), //Row
-            ),
-          ],
-
-
-        ),
-      ),
+        );
+      },
     );
   }
 }
