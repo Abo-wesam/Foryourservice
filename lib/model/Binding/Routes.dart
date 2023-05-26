@@ -1,3 +1,4 @@
+import 'package:foryourservice/views/sitting%20company/add_driver.dart';
 import 'package:get/get_navigation/src/routes/get_route.dart';
 import '../../RecordPage.dart';
 import '../../TestPage.dart';
@@ -36,6 +37,7 @@ class Routes {
   static String Orderdeliver = '/OrderDelivery';
   static String Test = '/MyPage';
   static String Schedules='/';
+    static String Drivers='/AddDriver';
 
   static List<GetPage> routes = [
     GetPage(
@@ -97,7 +99,10 @@ class Routes {
       name: Routes.Schedules,
       page: () => Schedule(),
     ),
-
+  GetPage(
+      name: Routes.Drivers,
+      page: () => AddDriver(),
+    ),
   ];
 }
 

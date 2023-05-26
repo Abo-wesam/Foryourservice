@@ -2,7 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 class driverModel {
   late String? Id_driv;
-  late String Id_comp;
+  late String? Id_comp;
   late String Name;
   late String? Created_ON;
   late bool is_active;
@@ -13,7 +13,7 @@ class driverModel {
       this.phone,
       this.Created_ON,
       required this.is_active,
-      required this.Id_comp});
+       this.Id_comp});
   factory driverModel.fromsnapshot(
       DocumentSnapshot<Map<String, dynamic>> _data) {
     final Data = _data.data()!;

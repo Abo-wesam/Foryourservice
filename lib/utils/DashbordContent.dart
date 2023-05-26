@@ -7,6 +7,7 @@ import '../auth/login_page.dart';
 import '../view_model/HandlingSpeech/ISpeechTotext.dart';
 import '../views/Home_Page.dart';
 import '../views/Profile.dart';
+import '../views/sitting company/add_driver.dart';
 
 class Dashbordcontent{
 
@@ -45,7 +46,8 @@ if(user=='Customer'){
       HomePage(),
       Profile(),
       HomePage(),
-      LoginPage(),
+      
+      AddDriver(),
 
     ];
   }

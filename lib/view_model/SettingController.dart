@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:foryourservice/model/Binding/DriversModel.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_state_manager/src/simple/get_controllers.dart';
@@ -41,5 +42,17 @@ class SettingController extends GetxController {
     print('the list company ${listcomp.length}');
     Spechtext.speakListcompanylist(listcomp);
     return await Firebase_Auth().GetAllCompany(comp_typ);
+  }
+
+  Future <List<driverModel>> Getdrivers() async {
+    return await Firebase_Auth().GetAllDrivers();
+
+  }
+
+  Future<void> updatedriver(driverModel driver) async{
+        Firebase_Auth().UpdateDrivers(driver);
+  }
+  Future<void> deletedriver(String driver) async{
+        Firebase_Auth().DeleteDrivers(driver);
   }
 }

@@ -10,6 +10,7 @@ import '../auth/Admin/MainAdmin.dart';
 import '../auth/Dashboard/dashboard.dart';
 import '../helper/SharedStorage.dart';
 import '../model/Binding/CompanyModel.dart';
+import '../model/Binding/DriversModel.dart';
 import '../model/Binding/RequestModel.dart';
 import '../model/Binding/Roles.dart';
 import '../model/Binding/Routes.dart';
@@ -18,29 +19,28 @@ import '../utils/showSnackbar.dart';
 class Firebase_Auth with ChangeNotifier {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final CollectionReference _collectionReference =
-  FirebaseFirestore.instance.collection('User');
+      FirebaseFirestore.instance.collection('User');
   final CollectionReference _referenceroledet =
-  FirebaseFirestore.instance.collection('RoleDetals');
+      FirebaseFirestore.instance.collection('RoleDetals');
   final CollectionReference _referenceRequest =
-  FirebaseFirestore.instance.collection('Request');
+      FirebaseFirestore.instance.collection('Request');
+  final CollectionReference _referenceDriver =
+      FirebaseFirestore.instance.collection('Driver');
 
   UserModel? _user;
 
   UserModel get user => _user!;
 
-  Future<void> signUpWithEmail(UserModel model, BuildContext context,
-      String typeOfRegist) async {
+  Future<void> signUpWithEmail(
+      UserModel model, BuildContext context, String typeOfRegist) async {
     try {
       final credential = await _auth.createUserWithEmailAndPassword(
         email: model.Email,
         password: model.Password,
-
-
       );
 
-
       final getid = credential.user!;
-    await  getid.updateDisplayName(model.Name);
+      await getid.updateDisplayName(model.Name);
       print('id: ${credential}');
       CreateUser(model, getid.uid, context);
     } on FirebaseAuthException catch (e) {
@@ -66,8 +66,7 @@ class Firebase_Auth with ChangeNotifier {
             .then((snapshot) {
           if (snapshot.docs.isNotEmpty) {
             final GetUser = snapshot.docs
-                .map((e) =>
-                UserModel.fromsnapshot(
+                .map((e) => UserModel.fromsnapshot(
                     e as DocumentSnapshot<Map<String, dynamic>>))
                 .toList();
             GetUser.forEach((element) {
@@ -75,15 +74,19 @@ class Firebase_Auth with ChangeNotifier {
               if (element.is_active == true) {
                 if (element.Role == 'Customer') {
                   Get.to(dashboard());
-                  Get.snackbar('Login', 'Login successfull', colorText: Colors.white,
-                      backgroundColor: Colors.lightBlue,icon: const Icon(Icons.add_alert));
+                  Get.snackbar('Login', 'Login successfull',
+                      colorText: Colors.white,
+                      backgroundColor: Colors.lightBlue,
+                      icon: const Icon(Icons.add_alert));
                   SharedStorage().checkForDisableUser();
                 }
                 if (element.Role == 'Company') {
                   print(user.Role);
                   Get.to(dashboard());
-                  Get.snackbar('Login', 'Login successfull', colorText: Colors.white,
-                      backgroundColor: Colors.lightBlue,icon: const Icon(Icons.add_alert));
+                  Get.snackbar('Login', 'Login successfull',
+                      colorText: Colors.white,
+                      backgroundColor: Colors.lightBlue,
+                      icon: const Icon(Icons.add_alert));
                 }
               } else {
                 Get.snackbar('Login',
@@ -94,8 +97,10 @@ class Firebase_Auth with ChangeNotifier {
             });
           } else {
             navigator?.pushNamed(Routes.MainAdmin);
-            Get.snackbar('Login', 'Login successfull', colorText: Colors.white,
-              backgroundColor: Colors.lightBlue,icon: const Icon(Icons.add_alert));
+            Get.snackbar('Login', 'Login successfull',
+                colorText: Colors.white,
+                backgroundColor: Colors.lightBlue,
+                icon: const Icon(Icons.add_alert));
           }
         });
       }
@@ -105,8 +110,10 @@ class Firebase_Auth with ChangeNotifier {
       } else if (e.code == 'wrong-password') {
         Get.snackbar('Login', 'Wrong password provided for that user.');
       }
-      Get.snackbar('Login', e.message!, colorText: Colors.white,
-        backgroundColor: Colors.lightBlue,icon: const Icon(Icons.add_alert));
+      Get.snackbar('Login', e.message!,
+          colorText: Colors.white,
+          backgroundColor: Colors.lightBlue,
+          icon: const Icon(Icons.add_alert));
     }
   }
 
@@ -128,8 +135,7 @@ class Firebase_Auth with ChangeNotifier {
         .then((snapshot) {
       if (snapshot.docs.isNotEmpty) {
         final GetUser = snapshot.docs
-            .map((e) =>
-            UserModel.fromsnapshot(
+            .map((e) => UserModel.fromsnapshot(
                 e as DocumentSnapshot<Map<String, dynamic>>))
             .toList();
         GetUser.forEach((element) {
@@ -150,8 +156,7 @@ class Firebase_Auth with ChangeNotifier {
         .then((snapshot) {
       if (snapshot.docs.isNotEmpty) {
         final getdata = snapshot.docs
-            .map((e) =>
-            UserModel.fromsnapshot(
+            .map((e) => UserModel.fromsnapshot(
                 e as DocumentSnapshot<Map<String, dynamic>>))
             .toList();
         getdata.forEach((element) {
@@ -171,8 +176,7 @@ class Firebase_Auth with ChangeNotifier {
         .then((snapshot) {
       if (snapshot.docs.isNotEmpty) {
         response = snapshot.docs
-            .map((e) =>
-            UserModel.fromsnapshot(
+            .map((e) => UserModel.fromsnapshot(
                 e as DocumentSnapshot<Map<String, dynamic>>))
             .toList();
       }
@@ -192,14 +196,15 @@ class Firebase_Auth with ChangeNotifier {
         model.Role = 'Company';
 
         await _collectionReference.doc(model.User_id).set(model.tojson());
-        Get.snackbar(
-            'Vreification', 'please check your email for vreification',icon: const Icon(Icons.add_alert));
+        Get.snackbar('Vreification', 'please check your email for vreification',
+            icon: const Icon(Icons.add_alert));
       }
       Get.to(LoginPage());
     } on FirebaseAuthException catch (e) {
-      Get.snackbar('Register', e.message!, colorText: Colors.white,
-          backgroundColor: Colors.lightBlue,icon: const Icon(Icons.add_alert));
-
+      Get.snackbar('Register', e.message!,
+          colorText: Colors.white,
+          backgroundColor: Colors.lightBlue,
+          icon: const Icon(Icons.add_alert));
     }
   }
 
@@ -218,24 +223,25 @@ class Firebase_Auth with ChangeNotifier {
 
   UpdateUserProfile(UserModel user) async {
     final Result =
-    await _collectionReference.doc(user.User_id).update(user.tojson());
+        await _collectionReference.doc(user.User_id).update(user.tojson());
   }
 
   Future<List<UserModel>> GetAllCompany(int comp_typ) async {
     List<UserModel> Result;
     final getdata = await _collectionReference
         .where('type_user', isEqualTo: 2)
-        .where('is_active', isEqualTo: true).where('comp_Type',isEqualTo: comp_typ)
+        .where('is_active', isEqualTo: true)
+        .where('comp_Type', isEqualTo: comp_typ)
         .get();
 
     Result = getdata.docs
         .map((e) =>
-        UserModel.fromsnapshot(
-            e as DocumentSnapshot<Map<String, dynamic>>))
+            UserModel.fromsnapshot(e as DocumentSnapshot<Map<String, dynamic>>))
         .toList();
 
     return Result;
   }
+
   Future<List<UserModel>> GetAllCompanyforupdate() async {
     List<UserModel> Result;
     final getdata = await _collectionReference
@@ -245,8 +251,7 @@ class Firebase_Auth with ChangeNotifier {
 
     Result = getdata.docs
         .map((e) =>
-        UserModel.fromsnapshot(
-            e as DocumentSnapshot<Map<String, dynamic>>))
+            UserModel.fromsnapshot(e as DocumentSnapshot<Map<String, dynamic>>))
         .toList();
 
     return Result;
@@ -254,19 +259,17 @@ class Firebase_Auth with ChangeNotifier {
 
   Future<UserModel?> GetcompanyById(String User_id) async {
     UserModel? Result;
-    final getdata = await _collectionReference
-        .where('User_id', isEqualTo: User_id)
-        .get();
+    final getdata =
+        await _collectionReference.where('User_id', isEqualTo: User_id).get();
     Result = getdata.docs
         .map((e) =>
-        UserModel.fromsnapshot(
-            e as DocumentSnapshot<Map<String, dynamic>>)).single;
+            UserModel.fromsnapshot(e as DocumentSnapshot<Map<String, dynamic>>))
+        .single;
 
     return Result;
   }
 
   CreatNewRequest(Request_Model model) async {
-
     model.User_id = _auth.currentUser?.uid;
     try {
       await _referenceRequest.doc(model.id_req).set(model.tojson());
@@ -277,8 +280,29 @@ class Firebase_Auth with ChangeNotifier {
       } else if (e.code == 'email-already-in-use') {
         print('The account already exists for that email.');
       }
-      Get.snackbar('Request', '${e.message}' ,colorText: Colors.white,
-          backgroundColor: Colors.lightBlue,icon: const Icon(Icons.add_alert));
+      Get.snackbar('Request', '${e.message}',
+          colorText: Colors.white,
+          backgroundColor: Colors.lightBlue,
+          icon: const Icon(Icons.add_alert));
     }
+  }
+
+  Future<List<driverModel>> GetAllDrivers() async {
+    String? User_id = _auth.currentUser?.uid;
+    return await _referenceDriver
+        .where('Id_comp', isEqualTo: User_id)
+        .get()
+        .then((snapshot) => snapshot.docs
+            .map((e) => driverModel
+                .fromsnapshot(e as DocumentSnapshot<Map<String, dynamic>>))
+            .toList());
+  }
+
+ Future<void>  UpdateDrivers(driverModel driver)async{
+    await _referenceDriver.doc(driver.Id_driv).update(driver.tojson());
+  }
+
+  Future<void> DeleteDrivers(String driver) async {
+    await _referenceDriver.doc(driver).delete();
   }
 }
