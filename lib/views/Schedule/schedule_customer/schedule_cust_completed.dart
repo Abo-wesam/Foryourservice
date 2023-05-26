@@ -27,11 +27,7 @@ class ScheduleCustomerCompleted extends StatelessWidget {
               
               children: <Widget>[
                 ListTile(
-                  leading: const Icon(
-                    Icons.album,
-                    color: Colors.blue,
-                    size: 30,
-                  ),
+                  
                   title: Text(schedule.name),
                   subtitle: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
